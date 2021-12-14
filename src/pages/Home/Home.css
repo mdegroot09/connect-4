@@ -35,3 +35,24 @@
     cursor: pointer;
     background-color: white;
 }
+
+.btnContainer {
+    height: 40px;
+    margin: 20px;
+}
+
+.new {
+    height: 100%;
+    width: 130px;
+    border: none;
+    border-radius: 3px;
+    background-color: darkblue;
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.new:active {
+    background-color: rgb(0, 0, 116);
+}

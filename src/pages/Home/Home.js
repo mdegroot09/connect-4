@@ -56,7 +56,6 @@ class Home extends Component {
             if (Math.floor(decr / 7) === decrRow){
                 decrDiagCombo.push(decr)
             }
-            
             decr += 8
             decrRow++
         }
@@ -70,14 +69,12 @@ class Home extends Component {
             if (Math.floor(incr / 7) === incrRow){
                 incrDiagCombo.push(incr)
             }
-            
             incr += 6
             incrRow++
         }
         let incrDiag = this.checkForWinner(incrDiagCombo, 0, 41)
 
         let winner = hor || vert || decrDiag || incrDiag ? true : false
-        console.log(winner)
         return winner
     }
 
@@ -105,10 +102,19 @@ class Home extends Component {
         }
     }
 
+    resetBoard = () => {
+        let {updateWinner} = this.props
+        updateWinner(false)
+        
+        // disable all circles
+        for (let i = 0; i < 42; i++){
+            let e = document.getElementById(`circle${i}`)
+            e.style.pointerEvents = 'auto'
+            e.style.backgroundColor = 'white'
+        }
+    }
+
     render() { 
-        setTimeout(() => {
-            console.log('winner: ' + winner)
-        }, 100);
         let {turnRed, winner} = this.props
         let turn = turnRed ? 'Red' : 'Yellow'
         
@@ -171,6 +177,9 @@ class Home extends Component {
                         <div className='circle' id='circle40' onClick={(e) => this.fillCircle(e.target.id)}></div>
                         <div className='circle' id='circle41' onClick={(e) => this.fillCircle(e.target.id)}></div>
                     </div>
+                </div>
+                <div className='btnContainer'>
+                    <button className='new' onClick={this.resetBoard} style={{display: winner ? 'block' : 'none'}}>new</button>
                 </div>
             </div>
          );
