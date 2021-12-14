@@ -12,7 +12,7 @@
     width: 600px;
     max-height: calc(100vw - 100px);
     max-width: calc(100vw - 100px);
-    padding: 20px 0;
+    padding: 15px 0;
     display: flex;
     flex-direction: column;
     border: 1px solid black;
@@ -27,8 +27,8 @@
     height: calc(100% / 6);
 }
 
-.slot {
-    height: calc(100% - 30px);
+.circle {
+    height: calc(100% - 45px);
     width: calc(100% / 7 - 30px);
     border: 1px solid black;
     border-radius: 50%;
