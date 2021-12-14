@@ -42,9 +42,41 @@ class Home extends Component {
         let hor = this.checkForWinner(horCombo, baseHor, maxHor)
 
         // vertical
-        // let baseVertical = Math.floor
+        let vertCombo = [num - 21, num - 14, num - 7, num, num + 7, num + 14, num + 21]
+        let baseVert = 0
+        let maxVert = 41
+        let vert = this.checkForWinner(vertCombo, baseVert, maxVert)
 
-        let winner = hor ? true : false
+        // decr diagonal 
+        let decrDiagCombo = []
+        let decr = num - 24
+        let row = Math.floor(num / 7)
+        let decrRow = row - 3
+        while (decr <= num + 24){
+            if (Math.floor(decr / 7) === decrRow){
+                decrDiagCombo.push(decr)
+            }
+            
+            decr += 8
+            decrRow++
+        }
+        let decrDiag = this.checkForWinner(decrDiagCombo, 0, 41)
+
+        // incr diagonal 
+        let incrDiagCombo = []
+        let incr = num - 18
+        let incrRow = row - 3
+        while (incr <= num + 18){
+            if (Math.floor(incr / 7) === incrRow){
+                incrDiagCombo.push(incr)
+            }
+            
+            incr += 6
+            incrRow++
+        }
+        let incrDiag = this.checkForWinner(incrDiagCombo, 0, 41)
+
+        let winner = hor || vert || decrDiag || incrDiag ? true : false
         console.log(winner)
         return winner
     }
@@ -67,6 +99,7 @@ class Home extends Component {
         let {updateWinner} = this.props
         updateWinner(true)
         
+        // disable all circles
         for (let i = 0; i < 42; i++){
             document.getElementById(`circle${i}`).style.pointerEvents = 'none'
         }
