@@ -120,8 +120,8 @@ class Home extends Component {
         
         return ( 
             <div className='home'>
-                <h1 style={{display: winner ? 'none' : 'inline'}}>Turn: <span style={{color: turn === 'Red' ? 'red' : 'yellow', textShadow: '0 0 4px lightblue, 0 0 4px lightblue, 0 0 4px lightblue'}}>{turn}</span></h1>
-                <h1 style={{display: winner ? 'inline' : 'none'}}>{turn} Wins!!!</h1>
+                <h1 style={{display: winner ? 'none' : 'inline', color: 'darkblue'}}>Turn: <span className='header' style={{color: turn === 'Red' ? 'red' : 'yellow'}}>{turn}</span></h1>
+                <h1 className='header' style={{display: winner ? 'inline' : 'none', color: turn === 'Red' ? 'red' : 'yellow'}}>{turn} Wins!!!</h1>
                 <div className='board'>
                     <div className='row'>
                         <div className='circle' id='circle0' onClick={(e) => this.fillCircle(e.target.id)}></div>
