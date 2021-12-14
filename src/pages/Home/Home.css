@@ -9,8 +9,8 @@
 
 .board {
     height: 600px;
-    width: 600px;
-    max-height: calc(100vw - 100px);
+    width: 700px;
+    max-height: calc((100vw - 100px) * .86);
     max-width: calc(100vw - 100px);
     padding: 15px 0;
     display: flex;
@@ -28,7 +28,7 @@
 }
 
 .circle {
-    height: calc(100% - 45px);
+    height: calc(100% - 30px);
     width: calc(100% / 7 - 30px);
     border: 1px solid black;
     border-radius: 50%;

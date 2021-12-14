@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { updateTurnRed } from '../../redux/reducer';
+import { updateTurnRed, updateWinner } from '../../redux/reducer';
 
 class Home extends Component {
     constructor(props) {
@@ -12,11 +12,13 @@ class Home extends Component {
         let {turnRed, updateTurnRed} = this.props
         let background = turnRed ? 'red' : 'yellow'
         id = this.findLowestRow(id)
-        let e = document.getElementById(id)
         
+        let e = document.getElementById(id)
         e.style.backgroundColor = background
         e.style.pointerEvents = 'none'
-        updateTurnRed(!turnRed)
+        
+        let winner = this.checkForCombos(id)
+        winner ? this.setWinner(true) : updateTurnRed(!turnRed)
     }
 
     findLowestRow = (id) => {
@@ -25,20 +27,62 @@ class Home extends Component {
             if (document.getElementById(`circle${num + 7}`).style.pointerEvents !== 'none'){
                 num += 7
             }
-            else {
-                break
-            }
+            else break
         }
         return `circle${num}`
     }
 
+    checkForCombos = (id) => {
+        let num = Number(id.split('circle')[1])
+
+        // horizontal
+        let horCombo = [num - 3, num - 2, num - 1, num, num + 1, num + 2, num + 3]
+        let baseHor = Math.floor(num / 7) * 7
+        let maxHor = baseHor + 6
+        let hor = this.checkForWinner(horCombo, baseHor, maxHor)
+
+        // vertical
+        // let baseVertical = Math.floor
+
+        let winner = hor ? true : false
+        console.log(winner)
+        return winner
+    }
+
+    checkForWinner = (combo, base, max) => {
+        let color = this.props.turnRed ? 'red' : 'yellow'
+        let colors = []
+        combo.forEach(a => {
+            if (a >= base && a <= max){
+                let e = document.getElementById(`circle${a}`)
+                colors.push(e.style.backgroundColor)
+            }
+        })
+        colors = colors.join('')
+        let winner = colors.includes(`${color}${color}${color}${color}`) ? true : false
+        return winner
+    }
+
+    setWinner = () => {
+        let {updateWinner} = this.props
+        updateWinner(true)
+        
+        for (let i = 0; i < 42; i++){
+            document.getElementById(`circle${i}`).style.pointerEvents = 'none'
+        }
+    }
+
     render() { 
-        let {turnRed} = this.props
+        setTimeout(() => {
+            console.log('winner: ' + winner)
+        }, 100);
+        let {turnRed, winner} = this.props
         let turn = turnRed ? 'Red' : 'Yellow'
         
         return ( 
             <div className='home'>
-                <h1>Turn: <span style={{color: turn === 'Red' ? 'red' : 'yellow', textShadow: '0 0 4px lightblue, 0 0 4px lightblue, 0 0 4px lightblue'}}>{turn}</span></h1>
+                <h1 style={{display: winner ? 'none' : 'inline'}}>Turn: <span style={{color: turn === 'Red' ? 'red' : 'yellow', textShadow: '0 0 4px lightblue, 0 0 4px lightblue, 0 0 4px lightblue'}}>{turn}</span></h1>
+                <h1 style={{display: winner ? 'inline' : 'none'}}>{turn} Wins!!!</h1>
                 <div className='board'>
                     <div className='row'>
                         <div className='circle' id='circle0' onClick={(e) => this.fillCircle(e.target.id)}></div>
@@ -101,12 +145,12 @@ class Home extends Component {
 }
 
 const mapStateToProps = state =>{
-    let {turnRed} = state
-    return {turnRed}
+    let {turnRed, winner} = state
+    return {turnRed, winner}
 }
 
 const mapStateToDispatch = {
-    updateTurnRed
+    updateTurnRed, updateWinner
 }
  
 export default connect(mapStateToProps, mapStateToDispatch)(Home);
