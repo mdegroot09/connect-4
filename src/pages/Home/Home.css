@@ -1,0 +1,37 @@
+.home {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.board {
+    height: 600px;
+    width: 600px;
+    max-height: calc(100vw - 100px);
+    max-width: calc(100vw - 100px);
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    background-color: darkblue;
+}
+
+.row {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: calc(100% / 6);
+}
+
+.slot {
+    height: calc(100% - 30px);
+    width: calc(100% / 7 - 30px);
+    border: 1px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: white;
+}
